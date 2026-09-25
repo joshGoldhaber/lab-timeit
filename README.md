@@ -86,9 +86,9 @@ Write the runtimes in terms of `n=len(container)` using big-O notation.
 
 |                        | `str`  | `list` | `deque` |
 | ---------------------- | ------ | ------ | ------- |
-| `check_palindrome_1`   | $O(n)$ |        |         |
-| `check_palindrome_2`   |        |        |         |
-| `check_palindrome_3`   |   --   |        |         |
+| `check_palindrome_1`   | $O(n)$ | $O(n)$ | $O(n^2)$|
+| `check_palindrome_2`   | $O(n)$ | $O(n)$ | $O(n)$  |
+| `check_palindrome_3`   |$O(n^2)$|   N/A  | $O(n)$  |
 
 > **NOTE**:
 > The `str` type is *immutable* and so does not support being modified.
@@ -138,11 +138,13 @@ $ python3 -m timeit -s 'import palindrome; from collections import deque; xs=deq
 
 Complete the following table with actual measured runtimes by substituting the values for `xs` and the function in the command above.
 
+*Times are in ms unless denoted otherwise*
+
 |                        | `xs=("1"*65536)` | `xs=([1]*65536)` | `xs=deque([1]*65536)` |
 | ---------------------- | ---------------- | ---------------- | --------------------- |
-| `check_palindrome_1`   |                  |                  |                       |
-| `check_palindrome_2`   |                  |                  |                       |
-| `check_palindrome_3`   |       --         |                  |                       |
+| `check_palindrome_1`   |       4.07       |     3.31         |    54.7               |
+| `check_palindrome_2`   |        1.85      |     1.8          |  1.87                 |
+| `check_palindrome_3`   |       N/A        |       130        |      2.45             |
 
 You should observe that the slow runtimes here correspond with the $O(n^2)$ asymptotic runtimes,
 and the fast runtimes correspond with the $O(n)$ runtimes.
@@ -172,10 +174,10 @@ Complete the table by modifying the `N` and `CONTAINER` variables in the shell c
 
 |                        | `CONTAINER=list` | `CONTAINER=deque`     |
 | ---------------------- | ---------------- | --------------------- |
-| `N=16`                 |                  |                       |
-| `N=17`                 |                  |                       |
-| `N=18`                 |                  |                       |
-| `N=19`                 |                  |                       |
+| `N=16`                 |    127           |     2.45              |
+| `N=17`                 |      530         |        4.92           |
+| `N=18`                 |        3.9 sec   |          9.79         |
+| `N=19`                 |       19.1 sec   |             19.6      |
 
 You should observe that the quadratic algorithm/container combination gets *really* slow *really* fast.
 The takeaway: **$O(n^2)$ is bad**.
